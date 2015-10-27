@@ -25,7 +25,6 @@ session = DBSession()
 @app.route('/categories')
 def showCategories():
 
-
     items = session.query(Item).all()
     return render_template('categories.html', items=items)
 
@@ -34,8 +33,16 @@ def showCategories():
 @app.route('/item/<int:category_id>/<int:item_id>')
 def showItem(category_id, item_id):
 
-
     return render_template('item.html')
+
+
+# route to edit an item
+@app.route('/edit/<int:category_id>/<int:item_id', methods=['GET', 'POST'])
+def editItem(category_id, item_id):
+
+    editedItem = session.query(Item).filter_by(id=item_id).one()
+
+    return render_template('edit.html')
 
 
 if __name__ == '__main__':
