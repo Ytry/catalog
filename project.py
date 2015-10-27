@@ -28,6 +28,7 @@ def showCategories():
     return render_template('categories.html')
 
 
+# route to an item's specific page
 @app.route('/item/<int:category_id>/<int:item_id>')
 def showItem(category_id, item_id):
 
