@@ -1,6 +1,21 @@
+# import flask dependencies
 from flask import Flask, render_template
 
+# import sqlalchemy dependencies
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# import database classes
+from database_setup import Base, Category, Item
+
+
 app = Flask(__name__)
+
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 
 # route to website homepage / category page
