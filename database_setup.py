@@ -15,6 +15,16 @@ class User(Base):
     name = Column(String(80), nullable=False)
     email = column(String(250))
 
+    @property
+    def serialize(self):
+        """Return object data in easily serializeable format"""
+        return{
+            'id': self.id,
+            'name': self.name,
+            'email': self.email
+        }
+
+
 
 
 engine = create_engine('sqlite:///catalog.db')
