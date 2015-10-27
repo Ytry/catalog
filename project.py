@@ -11,6 +11,7 @@ from database_setup import Base, Category, Item
 
 app = Flask(__name__)
 
+# connect to database and create a session to perform CRUD opperations on it
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
 
