@@ -13,7 +13,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(80), nullable=False)
-    email = column(String(250))
+    email = Column(String(250))
 
     @property
     def serialize(self):
