@@ -1,5 +1,5 @@
 # import flask dependencies
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 
 # import sqlalchemy dependencies
 from sqlalchemy import create_engine
@@ -25,12 +25,15 @@ session = DBSession()
 @app.route('/categories')
 def showCategories():
 
-    return render_template('categories.html')
+
+    items = session.query(Item).all()
+    return render_template('categories.html', items=items)
 
 
 # route to an item's specific page
 @app.route('/item/<int:category_id>/<int:item_id>')
 def showItem(category_id, item_id):
+
 
     return render_template('item.html')
 

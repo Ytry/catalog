@@ -1,11 +1,11 @@
 * {
-    /* border: 1px solid red !important; */
+   /* border: 1px solid red !important; */
 }
 
 body {
 
 	background-image: url("res/eight_horns.png");
-	
+
 }
 
 .row{
@@ -48,4 +48,16 @@ body {
 .item_desc {
 	margin: 1px;
 	border: 1px solid black;
+}
+
+#edit_button {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: -12px;
+}
+
+#delete_button {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	margin-left: -5px;
 }
