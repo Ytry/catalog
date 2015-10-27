@@ -25,6 +25,13 @@ class User(Base):
         }
 
 
+class Category(Base):
+    """Create table to hold Category data"""
+    __tablename__ = 'category'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+
 
 
 engine = create_engine('sqlite:///catalog.db')
