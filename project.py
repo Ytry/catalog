@@ -11,6 +11,6 @@ def showCategories():
 
     return render_template('categories.html')
 
-if __name__ == 'main':
+if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
