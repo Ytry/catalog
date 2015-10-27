@@ -2,13 +2,26 @@
     /* border: 1px solid red !important; */
 }
 
+body {
+
+	background-image: url("res/eight_horns.png");
+	
+}
+
 .row{
 	display: flex;
 }
 #navigation_bar {
 
-	background-color: #8F8F8F;
+	background-color: #5C5CAA;
 	height: 50px;
+}
+
+#app-title{
+
+	font-weight: bold;
+	margin: 3px;
+	font-size: 30px;
 }
 
 #categories_container {
@@ -16,6 +29,11 @@
 	background-color: #CBCBCB;
 	font-weight: bold;
 	border-top: 20px;
+}
+
+.category {
+	margin: 1px;
+	border: 1px solid black;
 }
 
 #item_container {
@@ -30,14 +48,4 @@
 .item_desc {
 	margin: 1px;
 	border: 1px solid black;
-}
-
-.category {
-	margin: 1px;
-	border: 1px solid black;
-}
-
-
-body {
-	background-image: url("res/eight_horns.png");
 }
