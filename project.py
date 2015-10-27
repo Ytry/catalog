@@ -1,5 +1,5 @@
 # import flask dependencies
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 
 # import sqlalchemy dependencies
 from sqlalchemy import create_engine
@@ -21,13 +21,18 @@ session = DBSession()
 
 # route to website homepage / category page
 @app.route('/')
-@app.route('/category')
-@app.route('/categories')
 def showCategories():
 
-    items = session.query(Item).all()
-    return render_template('categories.html', items=items)
+    return redirect(url_for('showItems', category_id=1))
 
+
+@app.route('/category/<int:category_id>')
+def showItems(category_id):
+
+    categories = session.query(Category).all()
+    items = session.query(Item).filter_by(category_id=category_id).all()
+    return render_template(
+        'categories.html', items=items, categories=categories)
 
 # route to an item's specific page
 @app.route('/item/<int:category_id>/<int:item_id>')
@@ -37,8 +42,8 @@ def showItem(category_id, item_id):
 
 
 # route to edit an item
-@app.route('/edit/<int:category_id>/<int:item_id', methods=['GET', 'POST'])
-def editItem(category_id, item_id):
+@app.route('/edit/<int:category_id>/<int:item_id>', methods=['GET', 'POST'])
+def editItem(item_id):
 
     editedItem = session.query(Item).filter_by(id=item_id).one()
 
