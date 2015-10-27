@@ -1,11 +1,11 @@
 * {
-    border: 1px solid red !important;
+    border: 1px solid black !important;
 }
 #navigation_bar {
 
-	background-color: #545454;
+	background-color: #C1C1C1;
 
 }
 body {
-	background-image: url("res/dark_embroidery.png")
+	background-image: url("res/eight_horns.png")
 }
