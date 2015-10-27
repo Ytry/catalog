@@ -1,6 +1,8 @@
 * {
     border: 1px solid red !important;
 }
-.navigation_bar {
+#navigation_bar {
+
+	background-color: #545454;
 
 }
