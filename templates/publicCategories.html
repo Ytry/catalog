@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="author" content="Kyle Lick">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
+		<title>Catalog App!</title>
+	</head>
+	<body>
+		<div id="navigation_bar">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 text-left">
+						<p id="app-title"><a href="{{url_for('showCategories')}}">Catalog App!</a></p>
+					</div>
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-6">
+						<p class="text-right"><a href="{{url_for('showLogin')}}">Login here</a></p>
+						<p class="text-right"><a href="/gdisconnect">Log Out</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="categories">
+			<div class="container text-center" id="categories_container">
+				<div class="row">
+					{% for category in categories %}
+					<div class="col-md-3 category">
+						<a href="{{url_for('showItems', category_id = category.id)}}">
+							<p>
+								{{category.name}}
+							</p>
+						</a>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="container" id="item_container">
+				{% for item in items %}
+				<div class="row item_row">
+					<div class="col-md-3 item">
+						<p>{{item.name}}</p>
+					</div>
+					<div class="col-md-9 item_desc">
+						<p>{{item.description}}</p>
+					</div>
+				</div>
+			{% endfor %}
+			</div>
+		</div> 
+	</body>
+</html>
