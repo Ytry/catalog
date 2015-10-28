@@ -5,8 +5,19 @@ from flask import Flask, render_template, url_for, redirect, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+# import oauth dependencies
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
+
 # import database classes
 from database_setup import Base, Category, Item
+
+# import python modules
+import random
+import string
+import httplib2
+import json
+import requests
 
 
 app = Flask(__name__)
