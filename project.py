@@ -34,12 +34,6 @@ def showItems(category_id):
     return render_template(
         'categories.html', items=items, categories=categories)
 
-# route to an item's specific page
-@app.route('/item/<int:category_id>/<int:item_id>')
-def showItem(category_id, item_id):
-
-    return render_template('item.html')
-
 
 # route to edit an item
 @app.route('/edit/<int:category_id>/<int:item_id>', methods=['GET', 'POST'])
