@@ -1,5 +1,6 @@
 # import flask dependencies
 from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 
 # import sqlalchemy dependencies
 from sqlalchemy import create_engine
@@ -26,6 +27,7 @@ def showCategories():
     return redirect(url_for('showItems', category_id=1))
 
 
+# route to categories page for a specific category of items
 @app.route('/category/<int:category_id>')
 def showItems(category_id):
 
