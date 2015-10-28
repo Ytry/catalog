@@ -1,5 +1,7 @@
 # import flask dependencies
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import session as login_session
+from flask import make_response, jsonify
 
 # import sqlalchemy dependencies
 from sqlalchemy import create_engine
@@ -10,7 +12,7 @@ from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 
 # import database classes
-from database_setup import Base, Category, Item
+from database_setup import Base, Category, Item, User
 
 # import python modules
 import random
@@ -26,6 +28,13 @@ app = Flask(__name__)
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog App"
+
+# connect to database and create a session to perform CRUD opperations on it
+engine = create_engine('sqlite:///catalog.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 
 # Route to login page
@@ -98,7 +107,6 @@ def gconnect():
 
         response = make_response(
             json.dumps("Token's client ID doesn't match app's."), 401)
-        print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
 
         return response
@@ -116,7 +124,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
-    login_session['credentials'] = credentials
+    login_session['credentials'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
 
     # Get user info
@@ -127,7 +135,6 @@ def gconnect():
     data = answer.json()
 
     login_session['username'] = data['name']
-    login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
     # see if user exists, if it doesn't make a new one
@@ -141,9 +148,6 @@ def gconnect():
     output += '<h1>Welcome, '
     output += login_session['username']
     output += '!</h1>'
-    output += '<img src="'
-    output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '  # noqa
     flash("you are now logged in as %s" % login_session['username'])
     return output
 
@@ -164,7 +168,7 @@ def gdisconnect():
         return response
 
     # Execute HTTP GET request to revoke current token.
-    access_token = credentials.access_token
+    access_token = credentials
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
@@ -176,11 +180,9 @@ def gdisconnect():
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
-        del login_session['picture']
 
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-
         return response
     else:
 
@@ -188,14 +190,6 @@ def gdisconnect():
         response = make_response(json.dumps(
             'Failed to revoke token for given user.'), 400)
         response.headers['Content-type'] = 'applications/json'
-
-
-# connect to database and create a session to perform CRUD opperations on it
-engine = create_engine('sqlite:///catalog.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
 
 # route to website homepage / category page
@@ -211,8 +205,13 @@ def showItems(category_id):
 
     categories = session.query(Category).all()
     items = session.query(Item).filter_by(category_id=category_id).all()
-    return render_template(
-        'categories.html', items=items, categories=categories)
+    if 'username' not in login_session:
+
+        return render_template(
+            'publicCategories.html', items=items, categories=categories)
+    else:
+        return render_template(
+            'categories.html', items=items, categories=categories)
 
 
 # route to edit an item
@@ -220,6 +219,10 @@ def showItems(category_id):
 def editItem(item_id, category_id):
 
     editedItem = session.query(Item).filter_by(id=item_id).one()
+
+    if 'username' not in login_session:
+
+        return redirect('/login')
 
     if request.method == 'POST':
 
@@ -246,6 +249,10 @@ def deleteItem(item_id, category_id):
 
     deletedItem = session.query(Item).filter_by(id=item_id).one()
 
+    if 'username' not in login_session:
+
+        return redirect('/login')
+
     if request.method == 'POST':
 
         if request.form['name'] == deletedItem.name:
@@ -264,6 +271,10 @@ def addItem(category_id):
 
     category = session.query(Category).filter_by(id=category_id).one()
 
+    if 'username' not in login_session:
+
+        return redirect('/login')
+
     if request.method == 'POST':
 
         newItem = Item(name=request.form['add_name'], description=request.form[
@@ -276,6 +287,40 @@ def addItem(category_id):
         return render_template('addItem.html', category_id=category_id)
 
 
+# return a user id given their email
+def getUserID(email):
+
+    try:
+
+        user = session.query(User).filter_by(email=email).one()
+
+        return user.id
+
+    except:
+
+        return None
+
+
+# return all info about a user given their ID
+def getUserInfo(user_id):
+
+    user = session.query(User).filter_by(id=user_id).one()
+    return user
+
+
+# create a user
+def createUser(login_session):
+
+    newUser = User(name=login_session['username'], email=login_session[
+        'email'])
+    session.add(newUser)
+    session.commit
+    user = session.query(User).filter_by(email=login_session['email']).one()
+
+    return user.id
+
+
 if __name__ == '__main__':
+    app.secret_key = 'super_secret_key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
