@@ -287,6 +287,33 @@ def addItem(category_id):
         return render_template('addItem.html', category_id=category_id)
 
 
+# JSON APIs to view all items
+@app.route('/items/JSON')
+def itemsJSON():
+
+    items = session.query(Item).all()
+
+    return jsonify(Items=[i.serialize for i in items])
+
+
+# JSON APIs to view categories
+@app.route('/categories/JSON')
+def categoriesJSON():
+
+    categories = session.query(Category).all()
+
+    return jsonify(Categories=[i.serialize for i in categories])
+
+
+# JSON APIs to view a category of items
+@app.route('/category/<int:category_id>/JSON')
+def categoryJSON(category_id):
+
+    items = session.query(Item).filter_by(category_id=category_id).all()
+
+    return jsonify(Items=[i.serialize for i in items])
+
+
 # return a user id given their email
 def getUserID(email):
 
