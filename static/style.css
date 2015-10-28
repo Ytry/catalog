@@ -61,3 +61,31 @@ body {
 	margin-bottom: 2px;
 	margin-left: -5px;
 }
+
+#description {
+
+	margin-top: 20px;
+}
+
+#name {
+
+	margin-top: 20px;
+
+}
+
+#edit_header {
+
+	margin-top: 20px;
+}
+
+#delete_header {
+
+	margin-top: 20px;
+
+}
+
+#delete_item_form_buttons {
+
+	margin-top: 10px;
+
+}
