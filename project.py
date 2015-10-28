@@ -22,11 +22,13 @@ import requests
 
 app = Flask(__name__)
 
+# oAuth2 client info file
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog App"
 
 
+# Route to login page and generate an anti-forgery state key to prevent session hijacking
 @app.route('/login')
 def showLogin():
 
