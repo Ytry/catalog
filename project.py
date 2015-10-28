@@ -60,6 +60,21 @@ def editItem(item_id, category_id):
             'edit.html', category_id=category_id, item_id=item_id, item=editedItem)  # noqa
 
 
+@app.route('/delete/<int:category_id>/<int:item_id>', methods=['GET', 'POST'])
+def deleteItem(item_id, category_id):
+
+    deletedItem = session.query(Item).filter_by(id=item_id).one()
+
+    if request.method == 'POST':
+
+        if request.form['name'] == deletedItem.name:
+
+            session.delete(deleteItem)
+            session.commit()
+
+        return redirect(url_for('showItems', category_id=category_id))
+    else:
+        return render_template('deleteItem.html', category_id=category_id, item_id=item_id, item=deletedItem)  # noqa
 
 
 if __name__ == '__main__':
