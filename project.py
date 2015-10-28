@@ -22,6 +22,20 @@ import requests
 
 app = Flask(__name__)
 
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+APPLICATION_NAME = "Catalog App"
+
+
+@app.route('/login')
+def showLogin():
+
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
+                    for x in xrange(32))
+    login_session['state'] = state
+
+    return render_template('login.html', STATE=state)
+
 # connect to database and create a session to perform CRUD opperations on it
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.bind = engine
