@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="author" content="Kyle Lick">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
+		<title>Catalog App!</title>
+	</head>
+	<body>
+		<div id="navigation_bar">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 text-left">
+						<p id="app-title"><a href="{{url_for('showCategories')}}">Catalog App!</a></p>
+					</div>
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-6">
+					</div>
+				</div>
+			</div>
+			<div class="add_form">
+				<form action="#" method = 'post'>
+					<div class="container">
+						<div class="row" id="add_item_name">
+							<div class="col-md-12">
+								<label for="name">Name: </label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<input type ="text" name="add_name">
+							</div>
+						</div>
+						<div class="row" id="add_item_description">
+							<div class="col-md-12">
+								<label for="add_description">Description: </label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<textarea class="edit_form" rows="4" style="width: 300px;" name="add_description"></textarea>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+								<button type="submit" class="btn btn-success" id="submit" type="submit">
+								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Save</button>
+							</div>
+							<div class="col-md-11">
+								<a href="{{url_for('showItems', category_id=category_id)}}">
+									<button class="btn btn-danger">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
