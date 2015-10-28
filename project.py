@@ -43,11 +43,29 @@ def showItem(category_id, item_id):
 
 # route to edit an item
 @app.route('/edit/<int:category_id>/<int:item_id>', methods=['GET', 'POST'])
-def editItem(item_id):
+def editItem(item_id, category_id):
 
     editedItem = session.query(Item).filter_by(id=item_id).one()
 
-    return render_template('edit.html')
+    if request.method == 'POST':
+
+        if request.form['name']:
+
+            editedItem.name = request.form['name']
+
+        if request.form['description']:
+
+            editItem.description = request.form['description']
+
+        session.add(editedItem)
+        session.commit()
+
+        return redirect(url_for('showItems', category_id=category_id))
+    else:
+        return render_template(
+            'edit.html', category_id=category_id, item_id=item_id, item=editedItem)  # noqa
+
+
 
 
 if __name__ == '__main__':
