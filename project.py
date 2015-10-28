@@ -28,10 +28,11 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Catalog App"
 
 
-# Route to login page and generate an anti-forgery state key to prevent session hijacking
+# Route to login page
 @app.route('/login')
 def showLogin():
 
+    # generate an anti-forgery state key to prevent session hijacking
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
