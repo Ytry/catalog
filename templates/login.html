@@ -26,7 +26,7 @@
 		<div id="signInButton">
 			<span class="g-signin"
 			data-scope="openid email"
-			data-clientid="162291541073-6gudck7t5rn3df4i6gomq38q384c8qfs.apps.googleusercontent.com"
+			data-clientid="366472522653-1uu5lf715q71akluti80m915lmfnd8ak.apps.googleusercontent.com"
 			data-redirecturi="postmessage"
 			data-accesstype="offline"
 			data-cookiepolicy="single_host_origin"
@@ -52,7 +52,7 @@
 						if (result) {
 							$('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
 						setTimeout(function() {
-							window.location.href = "/restaurant";
+							window.location.href = "/";
 						}, 4000);
 					} else if (authResult['error']) {
 						console.log('There was an error: ' + authResult['error']);
