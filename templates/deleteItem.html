@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="author" content="Kyle Lick">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
+		<title>Catalog App!</title>
+	</head>
+	<body>
+		<div id="navigation_bar">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 text-left">
+						<p id="app-title"><a href="{{url_for('showCategories')}}">Catalog App!</a></p>
+					</div>
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-6">
+					</div>
+				</div>
+			</div>
+			<div class="delete_form">
+				<div class="container">
+					<form action="#" method = 'post'>
+						<div class="row">
+							<div class="col-md-12" id="delete_header">
+								<h1>Delete: "{{item.name}}"</h1>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="delete_text">
+								<h3>Type the name of the item you want to delete.</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12" id="name">
+								<input type ="text" name="name" placeholder="{{ item.name }}">
+							</div>
+						</div>
+						<div class="row" id="delete_item_form_buttons">
+							<div class="col-md-1">
+								<button type="submit" class="btn btn-danger" id="submit" type="submit">
+								<span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+							</div>
+							<div class="col-md-11">
+								<a href="{{url_for('showItems', category_id=category_id)}}">
+									<button class="btn btn-success">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel</button>
+								</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
