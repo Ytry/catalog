@@ -50,7 +50,7 @@ def editItem(item_id, category_id):
 
         if request.form['description']:
 
-            editItem.description = request.form['description']
+            editedItem.description = request.form['description']
 
         session.add(editedItem)
         session.commit()
@@ -70,7 +70,7 @@ def deleteItem(item_id, category_id):
 
         if request.form['name'] == deletedItem.name:
 
-            session.delete(deleteItem)
+            session.delete(deletedItem)
             session.commit()
 
         return redirect(url_for('showItems', category_id=category_id))
