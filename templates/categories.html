@@ -27,9 +27,17 @@
 				<div class="row">
 					{% for category in categories %}
 					<div class="col-md-3 category">
-						<a href="{{url_for('showItems', category_id = category.id)}}"><p>{{category.name}}</p></a>
+						<a href="{{url_for('showItems', category_id = category.id)}}">
+							<p>
+								{{category.name}}
+								<a href="{{url_for('addItem', category_id = category.id)}}" data-tobble="tooltip" title="New Item" type="button" class="btn btn-default" id="new_button" role="button">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								</a>
+							</p>
+						</a>
 					</div>
 					{% endfor %}
+
 				</div>
 			</div>
 		</div>
@@ -38,12 +46,17 @@
 				{% for item in items %}
 				<div class="row item_row">
 					<div class="col-md-1">
-						<a href="{{url_for('editItem', item_id=item.id, category_id=item.category_id)}}" type="button" class="btn btn-default" id="edit_button" role="button">
+						<a href="{{url_for('editItem', item_id=item.id, category_id=item.category_id)}}" data-toggle="tooltip" title="Edit" type="button" class="btn btn-default" id="edit_button" role="button">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 						</a>
-						<a href="{{url_for('deleteItem', item_id=item.id, category_id=item.category_id)}}"type="button" class="btn btn-danger" id="delete_button" role="button">
+						<a href="{{url_for('deleteItem', item_id=item.id, category_id=item.category_id)}}" data-toggle="tooltip" title="Delete"type="button" class="btn btn-danger" id="delete_button" role="button">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 						</a>
+						<script>
+							$(document).ready(function(){
+    						$('[data-toggle="tooltip"]').tooltip();   
+							});
+						</script>
 					</div>
 					<div class="col-md-2 item">
 						<p>{{item.name}}</p>
