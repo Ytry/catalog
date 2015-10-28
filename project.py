@@ -61,6 +61,7 @@ def editItem(item_id, category_id):
             'edit.html', category_id=category_id, item_id=item_id, item=editedItem)  # noqa
 
 
+# Delete an item from the database
 @app.route('/delete/<int:category_id>/<int:item_id>', methods=['GET', 'POST'])
 def deleteItem(item_id, category_id):
 
@@ -76,6 +77,24 @@ def deleteItem(item_id, category_id):
         return redirect(url_for('showItems', category_id=category_id))
     else:
         return render_template('deleteItem.html', category_id=category_id, item_id=item_id, item=deletedItem)  # noqa
+
+
+# add an item to the database
+@app.route('/new/<int:category_id>/', methods=['GET', 'POST'])
+def addItem(category_id):
+
+    category = session.query(Category).filter_by(id=category_id).one()
+
+    if request.method == 'POST':
+
+        newItem = Item(name=request.form['add_name'], description=request.form[
+            'add_description'], category=category)
+        session.add(newItem)
+        session.commit()
+
+        return redirect(url_for('showItems', category_id=category_id))
+    else:
+        return render_template('addItem.html', category_id=category_id)
 
 
 if __name__ == '__main__':
