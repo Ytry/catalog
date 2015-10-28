@@ -18,6 +18,7 @@
 					</div>
 					<div class="col-md-6">
 						<p class="text-right"><a href="{{url_for('showLogin')}}">Login here</a></p>
+						<p class="text-right"><a href="/gdisconnect">Log Out</a></p>
 					</div>
 				</div>
 			</div>
@@ -52,11 +53,6 @@
 						<a href="{{url_for('deleteItem', item_id=item.id, category_id=item.category_id)}}" data-toggle="tooltip" title="Delete"type="button" class="btn btn-danger" id="delete_button" role="button">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 						</a>
-						<script>
-							$(document).ready(function(){
-    						$('[data-toggle="tooltip"]').tooltip();   
-							});
-						</script>
 					</div>
 					<div class="col-md-2 item">
 						<p>{{item.name}}</p>
